@@ -31,16 +31,24 @@ router.get('/load', function(req, res, next) {
   id = id + 1;
 
   for(var i = 0; i < id; i++) {
-    comments = [...comments, { username: faker.internet.userName(), comment: faker.lorem.paragraph() }];
+    comments =
+      [
+        ...comments,
+        {
+          username: faker.internet.userName(),
+          comment: faker.lorem.paragraph()
+        }
+      ];
   }
 
   const newFilm = {
     id: id,
-    username: faker.internet.userName(),
-    timestamp: (Date.now() + (60*60*1000)),
-    photo: 'https://source.unsplash.com/random',
-    hearts: faker.random.number(),
-    comments: comments
+    username:    faker.internet.userName(),
+    timestamp:   (Date.now() + (60*60*1000)),
+    photo:       'https://source.unsplash.com/random',
+    description: faker.lorem.paragraph(),
+    hearts:      faker.random.number(),
+    comments:    comments
   };
 
   films = [...films, newFilm];
