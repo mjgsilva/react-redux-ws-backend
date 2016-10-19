@@ -3,8 +3,8 @@ var router = express.Router();
 var faker = require('faker');
 
 var films = [
- { id: 1, username: 'hannes_becker', timestamp: Date.now(), photo: 'https://source.unsplash.com/random', hearts: 939, comments: [{ username: 'jamz', comment: 'awesome!' }]},
- { id: 2, username: 'james_wales', timestamp: Date.now(), photo: 'https://source.unsplash.com/random', hearts: 12, comments: [{ username: 'karl', comment: 'awesome!' }]}
+ { id: 1, username: 'hannes_becker', timestamp: Date.now(), photo: 'https://source.unsplash.com/category/food', description: 'Hellooooo', hearts: 939, comments: [{ username: 'jamz', comment: 'awesome!' }]},
+ { id: 2, username: 'james_wales', timestamp: Date.now(), photo: 'https://source.unsplash.com/category/nature', description: 'What a sunny day', hearts: 12, comments: [{ username: 'karl', comment: 'awesome!' }]}
 ]
 
 var id = films.length;
@@ -27,8 +27,14 @@ router.get('/films/:timestamp', function(req, res, next) {
 
 router.get('/load', function(req, res, next) {
   var comments = [];
+  var categories = ['buildings', 'food', 'nature', 'people', 'technology', 'objects'];
 
   id = id + 1;
+  const min = 0;
+
+  const randomCategory = Math.round(Math.random() * (categories.length - min) + min);
+  const randomPhoto = 'https://source.unsplash.com/category/' + categories[randomCategory];
+
 
   for(var i = 0; i < id; i++) {
     comments =
@@ -45,7 +51,7 @@ router.get('/load', function(req, res, next) {
     id: id,
     username:    faker.internet.userName(),
     timestamp:   (Date.now() + (60*60*1000)),
-    photo:       'https://source.unsplash.com/random',
+    photo:       randomPhoto,
     description: faker.lorem.paragraph(),
     hearts:      faker.random.number(),
     comments:    comments
